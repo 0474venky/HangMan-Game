@@ -1,0 +1,115 @@
+# ASCII art for different stages of the hangman
+man = [r'''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ / \  |
+      |
+=========
+''',r'''
+  +---+
+  |   |
+  O   |
+ /|\  |
+ /    |
+      |
+=========
+''',r'''
+  +---+
+  |   |
+  O   |
+ /|\  |
+      |
+      |
+=========
+''',r'''
+  +---+
+  |   |
+  O   |
+ /|   |
+      |
+      |
+=========
+''',r'''
+  +---+
+  |   |
+  O   |
+  |   |
+      |
+      |
+=========
+''',r'''
+  +---+
+  |   |
+  O   |
+      |
+      |
+      |
+=========
+''',r'''
+  +---+
+  |   |
+      |
+      |
+      |
+      |
+=========
+''']
+
+# List of words for the game
+Word_list = ["apple", "banana", "chikoo", "mango", "watermelon"]
+
+# Importing the random module to select a random word from the list
+import random
+chosenword = random.choice(Word_list)  # Randomly choosing a word
+
+# Setting the initial number of lives
+live = 6
+
+# Placeholder for guessed word with underscores
+e = ""
+le = len(chosenword)  # Length of the chosen word
+for a in range(le):
+    e += '_'
+print(e)  # Displaying the initial blank word
+
+# Variable to track if the game has ended
+game = False
+
+# List to store correctly guessed letters
+f = []
+
+# Main game loop
+while not game:
+    # Asking the user to guess a letter
+    Guess = input("Enter a word: ").lower()
+    display = ""  # Temporary string to build the current state of the word
+
+    # Iterating through the chosen word to update the display
+    for i in chosenword:
+        if i == Guess:  # If guessed letter matches a letter in the word
+                display += i
+                f.append(i)  # Add the letter to the list of correct guesses
+        elif i in f:  # If the letter was already guessed
+                display += i
+        else:  # Otherwise, keep the placeholder '_'
+                display += '_'
+
+    print(display)  # Display the updated word
+
+    # Check if the guessed letter is not in the chosen word
+    if Guess not in display:
+        live -= 1  # Reduce lives
+        if live == 0:  # If no lives are left, the player loses
+            game = True
+            print("Offo! You lose")
+
+    # Check if the player has guessed the entire word
+    if "_" not in display:
+        game = True
+        print("Kudos! You won")
+
+    # Display the current stage of the hangman
+    print(man[live])
+    print("Lives left = {}".format(live))
